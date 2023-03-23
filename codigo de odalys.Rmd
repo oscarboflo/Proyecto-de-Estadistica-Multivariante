@@ -1,0 +1,77 @@
+---
+title: "Proyecto"
+author: "OT"
+date: "2023-01-13"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+Aplicación de conglomerados al proyecto, para este método se necesita una matriz cuadrada por lo cual hemos tomado un extracto de los datos.
+
+
+```{r}
+#install.packages("philentropy")
+#install.packages("readxl")
+library(philentropy)
+datos6 <- readxl::read_excel("matrix.xlsx")
+df <- data.frame(datos6)
+
+
+```
+
+Utilizamos la distancia default que es la distancia euclidiana y el método ***"single"***
+
+```{r}
+
+dimnames(df)=list(seq(1:28),seq(1:28))
+
+library(philentropy)
+y<- as.dist(df)
+
+
+cl <- hclust(y,method="single")
+plot(cl,hang = -1,main="Dendograma: método del vecino más próximo",xlab="Objetos",ylab="Distancia")
+abline(h=4.5,lty=2)
+
+```
+
+Podemos aprciar que se han generado 4 clusters a una distancia de 4,5.
+
+Tambien podemos realizarlo por el método ***"ave"*** o ***"average"***.
+
+```{r}
+cl <- hclust(y,method="average")
+plot(cl,hang = -1,main="Dendograma: método del promedio",xlab="Objetos",ylab="Distancia")
+
+```
+
+Por el método ***ward***.
+
+```{r}
+cl <- hclust(y,method="ward")
+plot(cl,hang = -1,main="Dendograma: método de Ward",xlab="Objetos",ylab="Distancia")
+
+```
+
+Esta es una manera de ver como podemos calcular las diferentes distancias en nuestra matriz de dstos.
+
+```{r}
+
+#distancia maxima entre dos componentes de X eY
+dd <-dist(df,method = "maximum")
+#distacia de manhattan
+dd <-dist(df,method = "manhattan")
+#distancia de canberra
+dd <-dist(df,method = "canberra")
+#distancia de minkowski
+dd <-dist(df,method = "minkowski")
+#distancia euclidiana
+dd <-dist(df)
+#conformacion de los conglomerados
+cl <- hclust(dd)
+plot(cl,hang=-1)
+```
+
+

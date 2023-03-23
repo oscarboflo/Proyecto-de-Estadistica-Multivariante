@@ -1,0 +1,107 @@
+---
+title: "Codigos en Markdown"
+author: "Oscar Bolaños Flores"
+date: "2022-11-07"
+output: pdf_document
+---
+```{r, echo=FALSE}
+# Leyendo los Datos -------------------------------------------------------
+
+library(readxl)
+library(tidyverse)
+library(knitr)
+library("fdth")
+library(plotly)
+library(corrr)
+library(ggplot2)
+library(grid)
+library(gridExtra)
+library(GPArotation)
+library(psych)
+library(e1071)
+
+datos = read_excel("Grupo 1.xlsx", col_names = T)
+#View(datos)
+
+# Estadistica Descriptiva -------------------------------------------------
+
+# Variables Cualitativas -----------
+
+# Tablas de Frecuencia
+
+#Tabla de frecuencia del Operador
+tfrecuencia_operador <- table(datos$Operador)
+#tfrecuencia_operador
+
+kable(tfrecuencia_operador, caption = "Tabla de Frecuencia del Operador",col.names = c("Operador", "Frecuencia"),
+      digits = 1, format.args=list(decimal.mark=","))
+
+tfrecuencia_tipo <- table(datos$TIPO)
+
+kable(tfrecuencia_tipo, caption = "Tabla de Frecuencia del Tipo",col.names = c("Tipo", "Frecuencia"),
+      digits = 1, format.args=list(decimal.mark=","))
+
+tfrecuencia_especie <- table(datos$ESPECIE)
+
+kable(tfrecuencia_especie, caption = "Tabla de Frecuencia de la Especie",col.names = c("Especie", "Frecuencia"),
+      digits = 1, format.args=list(decimal.mark=","))
+
+datos <- datos %>%
+  mutate(mes = case_when(mes == 1 ~ 'Enero',
+                         mes == 2 ~ 'Febrero',
+                         mes == 3 ~ 'Marzo',
+                         mes == 4 ~ 'Abril',
+                         mes == 5 ~ 'Mayo',
+                         mes == 6 ~ 'Junio',
+                         mes == 7 ~ 'Julio',
+                         mes == 8 ~ 'Agosto',
+                         mes == 9 ~ 'Septiembre',
+                         mes == 10 ~ 'Octubre',
+                         mes == 11 ~ 'Noviembre',
+                         mes == 12 ~ 'Diciembre'
+  )) %>%
+  mutate(mes = as_factor(mes))
+
+
+tfrecuencia_mes <- table(datos$mes)
+
+kable(tfrecuencia_mes, caption = "Tabla de Frecuencia del Mes",col.names = c("Mes", "Frecuencia"),
+      digits = 1, format.args=list(decimal.mark=","))
+
+
+
+```
+
+```{r}
+tfrecuencia_nbatch <- fdt(datos$NBatch)
+kable(tfrecuencia_nbatch, caption = "Tabla de Frecuencia del NBatch",
+      digits = 2, format.args=list(decimal.mark=","))
+```
+
+
+```{r}
+tfrecuencia_CapLinea <- fdt(datos$CapLinea)
+
+kable(tfrecuencia_CapLinea, caption = "Tabla de Frecuencia del CapLinea",
+      digits = 2, format.args=list(decimal.mark=","))
+```
+
+```{r}
+tfrecuencia_Hmezcla <- fdt(datos$HdMezcladora)
+kable(tfrecuencia_Hmezcla, caption = "Tabla de Frecuencia del Hmezcla",
+      digits = 2, format.args=list(decimal.mark=","))
+```
+
+```{r}
+tfrecuencia_minOrd <- fdt(datos$minOrd)
+kable(tfrecuencia_minOrd, caption = "Tabla de Frecuencia del minOrd",
+      digits = 2, format.args=list(decimal.mark=","))
+```
+
+```{r}
+matriz_va_cova <- cov(datos[,c('TempAc1','TempAc2','TemExp')])
+
+kable(matriz_va_cova, caption = "Matriz de Varianza y Covarianza",col.names = c("Temp. Ac1", "Temp. Ac2","Temp Exp"),
+      digits = 1, format.args=list(decimal.mark=","))
+```
+

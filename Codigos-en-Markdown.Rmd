@@ -1,0 +1,44 @@
+---
+title: "Codigos en Markdown"
+author: "Oscar Bolaños Flores"
+date: "2022-11-07"
+output: pdf_document
+---
+```{r, echo=FALSE}
+# Leyendo los Datos -------------------------------------------------------
+
+library(readxl)
+library(tidyverse)
+library(knitr)
+library("fdth")
+library(plotly)
+library(corrr)
+library(ggplot2)
+library(grid)
+library(gridExtra)
+library(GPArotation)
+library(psych)
+library(e1071)
+
+datos = read_excel("Grupo 1.xlsx", col_names = T)
+#View(datos)
+
+# Estadistica Descriptiva -------------------------------------------------
+
+# Variables Cualitativas -----------
+
+# Tablas de Frecuencia
+
+#Tabla de frecuencia del Operador
+tfrecuencia_operador <- table(datos$Operador)
+#tfrecuencia_operador
+
+kable(tfrecuencia_operador, caption = "Tabla de Frecuencia del Operador",col.names = c("Operador", "Frecuencia"),
+      digits = 1, format.args=list(decimal.mark=","))
+
+tfrecuencia_tipo <- table(datos$TIPO)
+
+kable(tfrecuencia_tipo, caption = "Tabla de Frecuencia del Tipo",col.names = c("Tipo", "Frecuencia"),
+      digits = 1, format.args=list(decimal.mark=","))
+```
+

@@ -1,0 +1,19 @@
+#length(datos$TempAc1)/length(boxplot(datos$TempAc1)$out)
+
+# Quitando Outliers
+
+#boxplot(datos$TempAc1)$out
+#boxplot(datos$TempAc2)$out
+
+
+#length(datos$TempAc2)
+
+#quartiles <- quantile(datos$TempAc1, probs=c(.25, .75), na.rm = FALSE)
+#IQR <- IQR(datos$TempAc1)
+
+#Lower <- quartiles[1] - 1.5*IQR
+#Upper <- quartiles[2] + 1.5*IQR 
+
+#TempAc1_no_outlier <- subset(datos$TempAc1, datos$TempAc1 > Lower & datos$TempAc1 < Upper)
+#TempAc2_no_outlier <- subset(datos$TempAc2, datos$TempAc2 > Lower & datos$TempAc2 < Upper)
+#boxplot(TempAc2_no_outlier)
